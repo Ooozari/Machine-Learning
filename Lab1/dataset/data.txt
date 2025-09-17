@@ -1,0 +1,5 @@
+Name	Age	City
+Ali	24	Lahore
+Sara	29	Karachi
+Ahmed	31	Islamabad
+Zara	27	Multan
