@@ -32,3 +32,9 @@ print("Root Mean Square Error",rmse)
 r2 = metrics.r2_score(y_test, pred)
 print("R² Score:", r2)
 
+
+
+
+
+
+
