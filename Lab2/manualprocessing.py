@@ -43,3 +43,10 @@ plt.ylabel('Brain weight in grams')
 plt.legend()
 plt.show()
 
+# Calculating RMSE
+rmse = 0
+for i in range(n):
+    y_pred = w0 + w1 * X[i]
+    rmse += (y[i] - y_pred) ** 2
+rmse = np.sqrt(rmse/n)
+print("RMSE =", rmse)
