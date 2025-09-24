@@ -50,3 +50,18 @@ for i in range(n):
     rmse += (y[i] - y_pred) ** 2
 rmse = np.sqrt(rmse/n)
 print("RMSE =", rmse)
+
+# Calculating R^2
+
+ss_tot = 0
+ss_res = 0
+
+y_mean = np.mean(y)
+
+for i in range(n):
+    y_pred = w0 + w1 * X[i]
+    ss_tot += (y[i]- y_mean) ** 2
+    ss_res += (y[i]- y_pred) ** 2
+r2 = 1 - (ss_res/ss_tot)
+print("R2 Score =",r2)
+
