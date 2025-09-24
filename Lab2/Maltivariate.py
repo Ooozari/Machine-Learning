@@ -19,3 +19,13 @@ from sklearn.preprocessing import LabelEncoder
 labelencoder= LabelEncoder()
 X[:,3] = labelencoder.fit_transform(X[:,3])
 X[:5]
+
+#splitting the dataset into the Traning and Test set
+from sklearn.model_selection import train_test_split
+
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2, random_state= 0)
+
+#fitting Multiple Linear Regression to the Traning ser
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
