@@ -26,4 +26,20 @@ w0 = (np.sum(y)-w1*(np.sum(X)))/n
 print("W1: ", w1)
 print("W0: ", w0)
 
+import matplotlib.pyplot as plt
+
+max_x = np.max(X)
+min_x = np.min(X)
+
+#Calculating lines values x and y
+x1 = np.linspace(min_x,max_x)
+y1 = w0 + w1 * x1
+# Ploting Line
+plt.plot(x1, y1, color='red', label='Regression Line')
+# Ploting Scatter Points
+plt.scatter(X,y,c='green', label='Scatter Plot')
+plt.xlabel('Head Size in cm^3')
+plt.ylabel('Brain weight in grams')
+plt.legend()
+plt.show()
 
