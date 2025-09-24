@@ -12,10 +12,23 @@ print(df.head())
 from sklearn.model_selection import train_test_split
 
 x_train,x_test,y_train,y_test = train_test_split(df,y,test_size=0.2)
-
 from sklearn.linear_model import LinearRegression
 
 lr = LinearRegression()
 lr.fit(x_train,y_train)
 pred = lr.predict(x_test)
 print(pred)
+
+
+## Calculating the Root mean square error and R square
+from sklearn import metrics
+import numpy as np 
+
+rmse = np.sqrt(metrics.mean_squared_error(y_test,pred))
+
+print("Root Mean Square Error",rmse)
+
+# R² score
+r2 = metrics.r2_score(y_test, pred)
+print("R² Score:", r2)
+
