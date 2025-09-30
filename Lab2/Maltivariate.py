@@ -1,41 +1,43 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 import seaborn as sns
 
+# Load dataset
 companies = pd.read_csv("./dataSet/1000_Companies.csv")
-coulumns = companies.columns
+columns = companies.columns
 print(companies.head())
 
-X = companies.iloc[:,-1].values
-y = companies.iloc[:,4].values
-X[:5]
+# Independent variables (all except last column "Profit")
+X = companies.iloc[:, :-1].values  
+
+# Dependent variable (last column "Profit")
+y = companies.iloc[:, -1].values  
+
+# Correlation heatmap
 sns.heatmap(companies.corr(numeric_only=True), annot=True, cmap="coolwarm")
 plt.show()
 
-# Encoding categorical data
+# Encoding categorical data (State column at index 3)
 from sklearn.preprocessing import LabelEncoder
-labelencoder= LabelEncoder()
-X[:,3] = labelencoder.fit_transform(X[:,3])
-X[:5]
+labelencoder = LabelEncoder()
+X[:, 3] = labelencoder.fit_transform(X[:, 3])
 
-#splitting the dataset into the Traning and Test set
+# Splitting the dataset into Training and Test set
 from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2, random_state= 0)
-
-#fitting Multiple Linear Regression to the Traning ser
+# Fitting Multiple Linear Regression to the Training set
 from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
-#predicting the Test set results
+# Predicting the Test set results
 y_pred = regressor.predict(X_test)
-print("Predicted :",y_pred[:5])
-print("Actual :",y_test[:5])
+print("Predicted:", y_pred[:5])
+print("Actual:", y_test[:5])
 
 # Calculating the R square value and the mean squared error
-from sklearn.metrics import r2_score,mean_squared_error
-print("R square value: %.2f",r2_score(y_test,y_pred))
-print("Mean squared error: %.2f",mean_squared_error(y_test,y_pred))
+from sklearn.metrics import r2_score, mean_squared_error
+print("R square value: %.2f" % r2_score(y_test, y_pred))
+print("Mean squared error: %.2f" % mean_squared_error(y_test, y_pred))
