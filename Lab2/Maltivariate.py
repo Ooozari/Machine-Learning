@@ -29,3 +29,13 @@ X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2, random_state
 from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
+
+#predicting the Test set results
+y_pred = regressor.predict(X_test)
+print("Predicted :",y_pred[:5])
+print("Actual :",y_test[:5])
+
+# Calculating the R square value and the mean squared error
+from sklearn.metrics import r2_score,mean_squared_error
+print("R square value: %.2f",r2_score(y_test,y_pred))
+print("Mean squared error: %.2f",mean_squared_error(y_test,y_pred))
