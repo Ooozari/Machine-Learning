@@ -50,3 +50,23 @@ plt.xlabel("K")
 plt.ylabel("Accuracy")
 plt.title("KNN Accuracy for K = 1 to 29")
 plt.show()
+
+# Change the p value to test 
+p_values = [1, 2, 3, 4, 5]
+
+# Train a KNN classifier for each value of p and record the accuracy scores
+p_accuracies = []
+
+for p in p_values:
+    knn = KNeighborsClassifier(n_neighbors=5, p=p) 
+    knn.fit(X_train, y_train)
+    y_pred = knn.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    p_accuracies.append(accuracy)
+
+# Print the accuracy for each p value
+print("\nAccuracy scores for each p value:")
+for p, accuracy in zip(p_values, p_accuracies):
+    print(f"p={p}: {accuracy:.4f}")
+print("")
+
