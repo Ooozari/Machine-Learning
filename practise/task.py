@@ -1,7 +1,11 @@
 import pandas as pd 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.datasets import load_wine
-import matplotlib as plt
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+
 # Load the wine data set
 wine = load_wine()
  
@@ -40,3 +44,7 @@ wine_df.boxplot(rot=90)
 plt.title("Boxplots for Outlier Detection")
 plt.show()
 
+plt.figure(figsize=(12, 8))
+sns.heatmap(wine_df.corr(), annot=True, cmap='coolwarm')
+plt.title("Feature Correlation Heatmap")
+plt.show()
