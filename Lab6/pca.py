@@ -4,7 +4,6 @@
 
 # Import required libraries
 import pandas as pd
-import numpy as np
 from sklearn.datasets import load_wine
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -37,7 +36,7 @@ print("\nData Standardized — Mean:", round(X_scaled.mean(), 2),
 
 #3) Apply PCA
 # Reduce data to 2 principal components
-pca = PCA(n_components=2)
+pca = PCA(n_components=2) 
 X_pca = pca.fit_transform(X_scaled)
 
 # Create new DataFrame with PCA results
