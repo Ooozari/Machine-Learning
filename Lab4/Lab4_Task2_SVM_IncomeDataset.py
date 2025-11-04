@@ -7,7 +7,6 @@ import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 
-from sklearn import preprocessing
 from sklearn.model_selection import train_test_split, cross_val_score
 import warnings
 warnings.filterwarnings("ignore")
