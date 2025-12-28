@@ -8,48 +8,58 @@
 # 2. Image → Text
 # 3. Image → Image
 
+import torch
+from diffusers import StableDiffusionPipeline, StableDiffusionImg2ImgPipeline
 from transformers import pipeline
 from PIL import Image
 
 # -------------------------------
-# 1. TEXT TO IMAGE
+# 1. TEXT TO IMAGE (Using Diffusers)
 # -------------------------------
-text_to_image = pipeline(
-    task="text-to-image",
-    model="stabilityai/stable-diffusion-2-1"
-)
+print("--- Loading Text-to-Image Model ---")
+# Using SD v1.5 as it is more accessible for labs
+model_id = "runwayml/stable-diffusion-v1-5"
+
+# Load the pipeline
+# Use device="cuda" if you have an NVIDIA GPU, else "cpu"
+pipe_t2i = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float32)
+pipe_t2i.to("cpu") 
 
 prompt = "A futuristic city at sunset, cyberpunk style"
-image = text_to_image(prompt)[0]["image"]
+print(f"Generating image for: {prompt}")
+image = pipe_t2i(prompt).images[0]
 image.save("one.png")
 
 
 # -------------------------------
-# 2. IMAGE TO TEXT (Image Captioning)
+# 2. IMAGE TO TEXT (Using Transformers)
 # -------------------------------
-image_to_text = pipeline(
-    task="image-to-text",
-    model="Salesforce/blip-image-captioning-base"
-)
+print("\n--- Running Image-to-Text ---")
+# The task name for captioning is "image-to-text"
+image_to_text = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
 
-input_image = Image.open("text_to_image.png")
+# Load the image we just created
+input_image = Image.open("one.png")
 caption = image_to_text(input_image)
 print("Image Caption:", caption[0]["generated_text"])
 
 
 # -------------------------------
-# 3. IMAGE TO IMAGE
+# 3. IMAGE TO IMAGE (Using Diffusers)
 # -------------------------------
-image_to_image = pipeline(
-    task="image-to-image",
-    model="stabilityai/stable-diffusion-2-1"
-)
+print("\n--- Running Image-to-Image ---")
+# We reuse the same base model but with the Img2Img pipeline
+pipe_i2i = StableDiffusionImg2ImgPipeline.from_pretrained(model_id, torch_dtype=torch.float32)
+pipe_i2i.to("cpu")
 
-edited_image = image_to_image(
+# Strength (0.0 to 1.0) controls how much to change the original image
+edited_image = pipe_i2i(
+    prompt="Convert this image into a watercolor painting",
     image=input_image,
-    prompt="Convert this image into a watercolor painting"
-)[0]["image"]
+    strength=0.75
+).images[0]
 
 edited_image.save("image_to_image.png")
+print("Task 2 Complete. Images saved as 'one.png' and 'image_to_image.png'")
 
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Evaluation Interface</title>
+</head>
+<body style="font-family: Arial; padding: 20px;">
+
+<h1>ML Model Evaluation using Flask</h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <h3>Select Dataset Type</h3>
+    <input type="radio" name="dataset_type" value="builtin" checked> Built-in Dataset<br>
+    <input type="radio" name="dataset_type" value="upload"> Upload CSV<br><br>
+
+    <div>
+        <label><b>Built-in Dataset:</b></label><br>
+        <select name="dataset">
+            <option value="iris">Iris</option>
+            <option value="digits">Digits</option>
+            <option value="wine">Wine</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div>
+        <label><b>Upload CSV:</b></label><br>
+        <input type="file" name="csv_file" accept=".csv">
+    </div>
+
+    <br>
+
+    <label><b>Select Model:</b></label><br>
+    <select name="model">
+        <option value="logistic">Logistic Regression</option>
+        <option value="knn">KNN</option>
+        <option value="svm">SVM</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Train & Evaluate</button>
+</form>
+
+<hr>
+
+{% if results %}
+<h2>Results ({{ results.dataset }})</h2>
+<ul>
+    <li><b>Accuracy:</b> {{ results.accuracy }}</li>
+    <li><b>Precision:</b> {{ results.precision }}</li>
+    <li><b>Recall:</b> {{ results.recall }}</li>
+    <li><b>F1 Score:</b> {{ results.f1 }}</li>
+</ul>
+
+<img src="{{ url_for('static', filename='metrics.png') }}" width="500">
+{% endif %}
+
+</body>
+</html>
